@@ -7,4 +7,8 @@
 The UML design is:
 <p align="center">
   <img src="https://github.com/ShuyiHuo/Pente_Game/blob/main/pente.png" width="500px" height="500px">
-</p>
+</p>  
+
+
+
+The details of coding sourse are in the src file.
