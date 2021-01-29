@@ -1,0 +1,96 @@
+
+/**
+ * @author sp5675
+ *
+ */
+public class Computer {
+	
+	Board board_; //the board to look through
+	boolean inUse_; //is the computer inUse
+	Game game_;
+
+	/**
+	 * Constructor
+	 */
+	public Computer(Board board, Game gm) {
+		board_ = board;
+		game_ = gm;
+
+	}
+	
+	/**
+	 * 
+	 * finds the max number of stones that the computer has in a row
+	 * 
+	 * @return String including the number of stones in a row for the computer
+	 * and the x,y coordinates surrounding the row of stones
+	 */
+	
+//	public String findMatches() {
+//		
+//	//	return board_.getMaxInRow(1);
+//	}
+
+	/**
+	 *
+	 * finds the max number of stones that the computer has in a row
+	 * 
+	 * @return String including the number of stones in a row for the opponent
+	 * and the x,y coordinates surrounding the row of stones
+	 */
+	
+//	public String findOpponentMatches() {
+//		
+//		
+//		return board_.getMaxInRow(2);
+//		
+//	}
+	
+	/**
+	 * The computer's move
+	 */
+	
+	public void move() {
+		 
+		
+		boolean canMove = true;
+		
+		while(canMove) {
+			
+			int randomX = (int) (Math.random() * 19);
+			System.out.println("x " + randomX);
+			int randomY = (int) (Math.random() * 19);
+			System.out.println("y " + randomY);
+			
+		if (board_.placeStone(randomX,randomY,1)) {
+
+			canMove = false;
+		}
+		else  {}
+		}
+		
+//		String matches = findMatches();
+//		System.out.println("matches " + matches);
+//		String opponent = findOpponentMatches();
+//		System.out.println("opponent " + opponent);
+//
+//		String[] numRow = matches.split(" ");
+//		String[] numOpponentRow = opponent.split(" ");
+//		
+//		//if the number of computer stones in a row is greater than the max number of opponent stones
+//		if (Integer.parseInt(numRow[0]) >= Integer.parseInt(numOpponentRow[0])) {
+//			System.out.println("computer more");
+//			System.out.println("row " + numRow[1] + " col " + numRow[2]);
+//			board_.placeStone(Integer.parseInt(numRow[1]), Integer.parseInt(numRow[2]), 1);
+//		}
+//		else {
+//			System.out.println("user more");
+//			board_.placeStone(Integer.parseInt(numOpponentRow[1]), Integer.parseInt(numOpponentRow[2]), 1);
+//		}
+		
+	}
+	
+	public boolean getUse() {
+		return inUse_;
+	}
+}

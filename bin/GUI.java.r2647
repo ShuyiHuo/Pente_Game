@@ -1,0 +1,848 @@
+
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+/**
+ * @author Sergio Perez
+ * @author Qingyi Lu
+ * @author Joshua Walker
+ * @author Jacque Kane
+ */
+
+public class GUI extends JFrame {
+	private JFrame mainFrame_ = new JFrame();
+	private JFrame gui = new JFrame();
+	private JFrame waitingRoom_ = new JFrame();
+	private String PlayerName_;
+	private PenteClient connection_;
+	private ObjectInputStream in_;
+	Grid grid_ = new Grid(); /// the pente board
+
+	JPanel rightButtons_ = new JPanel(new GridLayout(7,1)); // the display info on
+	                                                        // the right of the
+	                                                        // window
+	JPanel centerPanel_ = new JPanel(new BorderLayout()); // will hold the pente
+	                                                      // board
+
+	JPanel bottom_ = new JPanel(); // the bottom black line on the pente board
+	JPanel top_ = new JPanel(); // the top black line on the pente board
+	JPanel left_ = new JPanel(); // the left black line on the pente board
+	JPanel right_ = new JPanel(); // the right black line on the pente board
+
+	JTextField playerMode_ = new JTextField(" Current Player: 1 "); // player 1
+	                                                                // mode
+	JTextField capture_ = new JTextField(" Number of Captures "); // player 1 mode
+	                                                              // capture
+
+	JTextField Player1Capture_; // will display player one's captures
+	JTextField Player2Capture_; // will display player two's captures
+	JPanel mainMenu;
+
+	int counter_ = 0;
+	int counterSide_ = 0;
+
+	String timeElapsed_ = "";
+
+	JTextField time_;
+
+	JButton newGame_ = new JButton(" New Game "); // will create a new pente game
+	JButton rules_ = new JButton(" Rules "); // will display the rules for pente
+
+	int mouseX_ = 0; // will return x of the mouse
+	int mouseY_ = 0; // will return the y of the
+
+	boolean higlight_ = false; // will higlight_ yellow a vertex
+
+	ArrayList<Double> vertexX_ = new ArrayList<Double>(); // will hold a set of
+	                                                      // vertex Y
+	ArrayList<Double> vertexY_ = new ArrayList<Double>(); // will hold a set of
+	                                                      // vertex X
+
+	boolean win_ = false;
+
+	boolean winnerGomoku_;
+	boolean type;
+
+	private Game game_ = new Game(); // will create a Pente game
+	private Board board_ = game_.getBoard(); // will create the Pente board
+
+	private boolean useComputer_ = false;
+	private Computer comp_;
+
+	private class PenteClient extends Client {
+
+		String name_ = "";// name of user on this client
+		//private PrintWriter out_;
+
+		public PenteClient ( String hostName, int port ) {
+			super(hostName,port);
+			
+		}
+
+		public void setName ( String name ) {
+			name_ = name;
+		}
+
+	}
+
+	private class ReadThread extends Thread implements Runnable{
+		
+		@Override
+		public synchronized void run () {
+			try {
+				in_ = new ObjectInputStream((connection_.getSocket().getInputStream()));
+				
+				//String reader = in_.readLine();
+				
+			} catch ( IOException e ) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	private class CommunicationThread extends Thread implements Runnable {
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
+		@Override
+		public synchronized void run () {
+
+			// TODO Auto-generated method stub
+
+			connection_ = new PenteClient("localhost",9000);
+
+			System.out.println("I am reached");
+			connection_.sendMessage("playername "+PlayerName_);
+			System.out.println("I am also reached");
+			//connection_.setName(PlayerName_);
+
+		}
+
+	}
+
+	/*
+	 * The PenteGUI Constructor displays the window with a pente Board on the
+	 * left. While an informative box is display on the right
+	 */
+	public GUI () {
+		super("Pente");
+		mainFrame_.setLayout(new BorderLayout());
+		mainFrame_.setSize(600,600); // fix size so the Grid panel can have a width
+		                             // of
+		// 600 and a height of 600
+		mainFrame_.setResizable(false);
+		mainFrame_.setVisible(true);
+		mainFrame_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		gui.setLayout(new BorderLayout());
+		gui.setSize(1181,1046); // fix size so the Grid panel can have a width of
+		// 800 and a height of 800
+		gui.setResizable(false);
+		gui.setVisible(false);
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		vertexX_.add(50.0);
+		int xAxis = 50;
+		int yAxis = 50;
+
+		for ( int i = 0 ; i < 18 ; i++ ) {
+			vertexX_.add((double) xAxis + 900 / 18);
+			xAxis = xAxis + 900 / 18;
+		}
+
+		vertexY_.add(50.0);
+
+		for ( int i = 0 ; i < 18 ; i++ ) {
+			vertexY_.add((double) yAxis + 900 / 18);
+			yAxis = yAxis + 900 / 18;
+		}
+		// menu panels
+		mainMenu = new JPanel();
+		mainMenu.setLayout(new BoxLayout(mainMenu,BoxLayout.Y_AXIS));
+		mainMenu.setVisible(true);
+		mainMenu.setBackground(new Color(0x77dd77));
+		mainFrame_.add(mainMenu);
+
+		// adds the welcome to pente lable on main screen
+		final JLabel welcome = new JLabel("WELCOME TO PENTE!");
+		welcome.setAlignmentX(welcome.CENTER_ALIGNMENT);
+		welcome.setFont(new Font("Serif",Font.PLAIN,30));
+
+		// adds the enter name to pente lable on main screen
+		final JLabel playerName = new JLabel("Enter your name: ");
+		playerName.setAlignmentX(playerName.CENTER_ALIGNMENT);
+		playerName.setFont(new Font("Serif",Font.PLAIN,30));
+
+		// creates lil bord
+		final JPanel miniBoard = new JPanel() {
+			public void paintComponent ( Graphics g ) {
+				super.paintComponent(g);
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setColor(new Color(0x8C5D18));
+				g2.fillRect(110,0,170,170);
+				g2.setColor(new Color(0x77dd77));
+				g2.fillRect(120,10,150,150);
+				g2.setColor(new Color(0x5FB15F));
+				g2.setStroke(new BasicStroke(2));
+
+				for ( int i = 0 ; i < 6 ; i++ ) {
+					g2.drawLine(120,10 + i * 30,270,10 + i * 30);
+					g2.drawLine(120 + i * 30,10,120 + i * 30,160);
+				}
+
+			}
+
+		};
+		miniBoard.setPreferredSize(new Dimension(30,100));
+		miniBoard.setBackground(new Color(0x77dd77));
+		// miniBoard.setAlignmentX(miniBoard.CENTER_ALIGNMENT);
+
+		// create a text field for enter name
+		JTextField Field = new JTextField(5);
+		Field.setPreferredSize(new Dimension(3,5));
+		Field.setAlignmentX(Field.CENTER_ALIGNMENT);
+		PlayerName_ = Field.getText();
+
+		System.out.println(PlayerName_);
+
+		// creates the buttons on the main menu
+		final JPanel menuButtons = new JPanel();
+		menuButtons.setLayout(new GridLayout(10,10));
+		menuButtons.setPreferredSize(new Dimension(200,200));
+		menuButtons.setBackground(new Color(0x77dd77));
+		menuButtons.setAlignmentX(welcome.CENTER_ALIGNMENT);
+		menuButtons.setAlignmentX(playerName.CENTER_ALIGNMENT);
+		menuButtons.setBorder(BorderFactory.createEmptyBorder(15,20,20,15));
+
+		final JButton PlayOnline = new JButton("Play Online");
+		PlayOnline.setBackground(new Color(0xD2B48C));
+		final JButton PlayWithComputer = new JButton("Play With Computer");
+		PlayWithComputer.setBackground(new Color(0xD2B48C));
+		final JButton twoPersonGame = new JButton("Two Person Game ");
+		twoPersonGame.setBackground(new Color(0xD2B48C));
+
+		menuButtons.add(Field);
+
+		menuButtons.add(Box.createRigidArea(new Dimension(100,10)));
+		menuButtons.add(PlayOnline);
+		menuButtons.add(Box.createRigidArea(new Dimension(100,10)));
+		menuButtons.add(PlayWithComputer);
+		menuButtons.add(Box.createRigidArea(new Dimension(100,10)));
+		menuButtons.add(twoPersonGame);
+
+		mainMenu.add(welcome);
+		mainMenu.add(Box.createRigidArea(new Dimension(100,10)));
+		mainMenu.add(miniBoard);
+		mainMenu.add(playerName);
+		mainMenu.add(menuButtons);
+
+		// create Frame for waiting room
+
+		waitingRoom_.setLayout(new BorderLayout());
+		waitingRoom_.setSize(600,600); // fix size so the Grid panel can have a
+		                               // width of 600 and a height of 600
+		waitingRoom_.setResizable(false);
+		waitingRoom_.setVisible(false);
+		waitingRoom_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// room panel
+		JPanel Room = new JPanel();
+		Room.setLayout(new BoxLayout(Room,BoxLayout.Y_AXIS));
+		Room.setVisible(true);
+		Room.setBackground(new Color(0x77dd77));
+		waitingRoom_.add(Room);
+
+		final JLabel waitingList = new JLabel("WELCOME TO WAITING ROOM!");
+		waitingList.setAlignmentX(waitingList.CENTER_ALIGNMENT);
+		waitingList.setFont(new Font("Serif",Font.PLAIN,30));
+		Room.add(Box.createRigidArea(new Dimension(100,20)));
+		Room.add(waitingList);
+
+		// add name list label
+		JLabel nameList = new JLabel(" Player Name List : ");
+		nameList.setBackground(new Color(0x77dd77));
+		nameList.setAlignmentX(nameList.NORTH_WEST);
+		nameList.setFont(new Font("Serif",Font.PLAIN,30));
+		Room.add(Box.createRigidArea(new Dimension(100,50)));
+		Room.add(nameList);
+
+		PlayOnline.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed ( ActionEvent arg0 ) {
+				// TODO Auto-generated method stub
+
+				String name = JOptionPane.showInputDialog("Enter your name.");
+				PlayerName_ = name;
+				//if ( !name.equals(JOptionPane.CANCEL_OPTION) ) {
+
+
+					CommunicationThread connection = new CommunicationThread();
+
+					connection.start();
+
+					mainFrame_.setVisible(false);
+					waitingRoom_.setVisible(true);
+					waitingRoom_.addWindowListener(new WindowAdapter() {
+
+						public void windowClosing ( WindowEvent evt ) {
+							dispose();
+							connection_.sendMessage("closing"); // Send a disconnect message
+							                                    // to
+							                                    // the hub.
+							try {
+								Thread.sleep(333); // Wait one-half second to allow the message
+								                   // to
+								                   // be sent.
+							} catch ( InterruptedException e ) {}
+							System.exit(0);
+						}
+					});
+					setLocation(200,100);
+					setVisible(true);
+				//}
+			}
+		});
+
+		PlayWithComputer.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed ( ActionEvent arg0 ) {
+				// TODO Auto-generated method stub
+				useComputer_ = true;
+				comp_ = new Computer(board_,game_);
+				System.out.println("action");
+				JPanel myPanel = new JPanel();
+				myPanel.setLayout(new GridLayout(3,1,5,5));
+				Object[] options = { "Pente", "Gomoku", "cancel" };
+				int n = JOptionPane
+				    .showOptionDialog(myPanel,"Which rule do you want to choose?",
+				                      "game variations",
+				                      JOptionPane.YES_NO_CANCEL_OPTION,
+				                      JOptionPane.QUESTION_MESSAGE,null,options,
+				                      options[2]);
+
+				if ( n == JOptionPane.YES_OPTION ) {
+					mainFrame_.setVisible(false);
+					gui.setVisible(true);
+					winnerGomoku_ = false;
+					type = false;
+				} else if ( n == JOptionPane.NO_OPTION ) {
+					winnerGomoku_ = true;
+					mainFrame_.setVisible(false);
+					gui.setVisible(true);
+					type = true;
+				}
+
+			}
+		});
+
+		twoPersonGame.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed ( ActionEvent arg0 ) {
+				useComputer_ = false;
+				JPanel myPanel = new JPanel();
+				myPanel.setLayout(new GridLayout(3,1,5,5));
+				Object[] options = { "Pente", "Gomoku", "cancle" };
+				int n = JOptionPane
+				    .showOptionDialog(myPanel,"Which rule do you want to choose?",
+				                      "game variations",
+				                      JOptionPane.YES_NO_CANCEL_OPTION,
+				                      JOptionPane.QUESTION_MESSAGE,null,options,
+				                      options[2]);
+
+				if ( n == JOptionPane.YES_OPTION ) {
+					mainFrame_.setVisible(false);
+					gui.setVisible(true);
+					winnerGomoku_ = false;
+					type = false;
+				} else if ( n == JOptionPane.NO_OPTION ) {
+					winnerGomoku_ = true;
+					mainFrame_.setVisible(false);
+					gui.setVisible(true);
+					type = true;
+				}
+
+			}
+		});
+
+		Player1Capture_ = new JTextField(" Player 1: " + game_.getCapture(1));
+		Player1Capture_.setBackground(new Color(255,179,186));
+		Player1Capture_.setEditable(false);
+		Player1Capture_.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		Player2Capture_ = new JTextField(" Player 2: " + game_.getCapture(2));
+		Player2Capture_.setBackground(new Color(255,179,186));
+		Player2Capture_.setEditable(false);
+		Player2Capture_.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		Player1Capture_.setHorizontalAlignment(JTextField.CENTER);
+		Player2Capture_.setHorizontalAlignment(JTextField.CENTER);
+
+		timeElapsed_ = "" + counter_;
+
+		time_ = new JTextField(" Time Elapsed: " + timeElapsed_);
+		time_.setHorizontalAlignment(JTextField.CENTER);
+		time_.setBackground(new Color(255,255,186));
+
+		bottom_.setBackground(Color.black);
+		top_.setBackground(Color.black);
+		left_.setBackground(Color.black);
+		right_.setBackground(Color.black);
+
+		centerPanel_.add(top_,BorderLayout.NORTH);
+		centerPanel_.add(bottom_,BorderLayout.SOUTH);
+		centerPanel_.add(left_,BorderLayout.WEST);
+		centerPanel_.add(right_,BorderLayout.EAST);
+
+		centerPanel_.add(grid_,BorderLayout.CENTER);
+
+		gui.add(centerPanel_,BorderLayout.CENTER);
+
+		playerMode_.setEditable(false);
+		playerMode_.setHorizontalAlignment(JTextField.CENTER);
+
+		capture_.setEditable(false);
+		capture_.setHorizontalAlignment(JTextField.CENTER);
+		capture_.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+		capture_.setBackground(new Color(255,179,186));
+
+		time_.setEditable(false);
+		capture_.setHorizontalAlignment(JTextField.CENTER);
+
+		rightButtons_.add(playerMode_);
+		rightButtons_.add(capture_);
+		rightButtons_.add(Player1Capture_);
+		rightButtons_.add(Player2Capture_);
+		rightButtons_.add(time_);
+
+		newGame_.addActionListener(new Listener());
+		newGame_.setBorder(new LineBorder(Color.WHITE));
+
+		rightButtons_.add(newGame_);
+
+		rules_.addActionListener(new Listener());
+		rules_.setBorder(new LineBorder(Color.WHITE));
+		rightButtons_.add(rules_);
+
+		gui.add(rightButtons_,BorderLayout.EAST);
+
+		while ( true ) {
+			if ( counter_ >= 60 ) {
+				counter_ = 0;
+				counterSide_++;
+			}
+
+			counter_++;
+
+			timeElapsed_ = counterSide_ + ":" + counter_;
+			time_.setText(" Time Elapsed: " + timeElapsed_);
+
+			try {
+				Thread.sleep(1000);
+
+			} catch ( InterruptedException e ) {
+
+			}
+		}
+
+	}
+
+	public String getName () {
+		return PlayerName_;
+
+	}
+
+	/*
+	 * Grid will be the Pente Board were the user will be able to put stones on
+	 * the board.
+	 */
+	public class Grid extends JPanel
+	    implements MouseMotionListener, MouseListener {
+
+		boolean drawCircle_;
+		int newX_;
+		int newY_;
+		int currPlayer_;
+
+		Grid () {
+
+			addMouseMotionListener(this);
+			addMouseListener(this);
+			drawCircle_ = false;
+			newX_ = -1;
+			newY_ = -1;
+			currPlayer_ = 0;
+		}
+
+		public void paintComponent ( Graphics g ) {
+
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRect(0,0,1100,1100);
+			g.setColor(Color.BLACK);
+
+			for ( double i = 50 ; i < 1000 ; i = i + 900 / 18 ) { // the space between
+				// every line is
+				// 900/9
+				g.drawLine(50,(int) i,950,(int) i);
+			}
+			for ( double ii = 50 ; ii < 1000 ; ii = ii + 900 / 18 ) {
+				g.drawLine((int) ii,50,(int) ii,950);
+			}
+
+			for ( int ii = 0 ; ii < 19 ; ii++ ) {
+				for ( int i = 0 ; i < 19 ; i++ ) {
+					if ( Math.abs(mouseX_ - vertexX_.get(ii)) < 10
+					    && Math.abs(mouseY_ - vertexY_.get(i)) < 10 ) {
+
+						g.setColor(new Color(255,255,0,200)); // yellow circle
+						double x = vertexX_.get(ii);
+						double y = vertexY_.get(i);
+						g.fillOval((int) x - 25,(int) y - 25,50,50);
+					}
+				}
+
+			}
+
+			for ( int i = 0 ; i < board_.getNumX() ; i++ ) {
+				for ( int j = 0 ; j < board_.getNumY() ; j++ ) {
+					int stone = board_.getStone(i,j);
+					if ( stone == 1 ) {
+						g.setColor(Color.black);
+						double x = vertexX_.get(i);
+						double y = vertexY_.get(j);
+						g.fillOval((int) x - 25,(int) y - 25,50,50);
+					} else if ( stone == 2 ) {
+						g.setColor(Color.white);
+						double x = vertexX_.get(i);
+						double y = vertexY_.get(j);
+						g.fillOval((int) x - 25,(int) y - 25,50,50);
+
+					}
+				}
+			}
+
+			// Updates the right side button panel
+			if ( game_.getCurrentPlayer() == 1 ) {
+				// executed when the 1 player is playing
+				playerMode_.setText("Current Player: " + game_.getCurrentPlayer());
+				playerMode_.setBackground(Color.black);
+				playerMode_.setForeground(Color.WHITE);
+			} else if ( game_.getCurrentPlayer() == 2 ) {
+				// executed when the 2 player is playing
+				playerMode_.setText("Current Player: " + game_.getCurrentPlayer());
+				playerMode_.setBackground(Color.WHITE);
+				playerMode_.setForeground(Color.BLACK);
+			}
+
+			Player1Capture_.setText(" Player 1: " + game_.getCapture(1));
+			Player2Capture_.setText(" Player 2: " + game_.getCapture(2));
+
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see
+		 * java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+		 */
+		public void mouseMoved ( MouseEvent e ) {
+			higlight_ = true;
+			mouseX_ = e.getX();
+			mouseY_ = e.getY();
+			repaint();
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.
+		 * MouseEvent)
+		 */
+
+		public void mouseDragged ( MouseEvent e ) {
+
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		 */
+
+		public void mouseClicked ( MouseEvent evt ) {
+
+			// winnerGomoku_ = type;
+			if ( winnerGomoku_ == false ) {
+
+				int x = evt.getX(); // x value where user clicked.
+				int y = evt.getY(); // y value where user clicked.
+
+				newX_ = -1;
+				newY_ = -1;
+
+				for ( int i = 0 ; i < 19 ; i++ ) {
+					for ( int j = 0 ; j < 19 ; j++ ) {
+						if ( Math.abs(x - vertexX_.get(i)) < 10
+						    && Math.abs(y - vertexY_.get(j)) < 10 ) {
+							newX_ = (int) (vertexX_.get(i) / 50.0) - 1;
+							newY_ = (int) (vertexY_.get(j) / 50.0) - 1;
+						}
+					}
+				}
+
+				if ( newX_ >= 0 && newY_ >= 0 ) { // if the values are a position on the
+					// board
+
+					currPlayer_ = game_.getCurrentPlayer(); // gets the current player in
+					// the game
+					if ( !game_.placeStone(newX_,newY_) ) { // stone is not in a valid
+						// position
+						System.out.println("please click in a valid position");
+					} else { // stone is in a valid position
+						drawCircle_ = true; // so paint will draw the circle
+
+						if ( !game_.isWinner() ) {
+							System.out.println(game_.isWinner());
+							if ( useComputer_ ) {
+								comp_.move();
+							} else {
+								game_.startRound(); // switches to the next player, start a new
+							} // round
+						} else {
+							// pop up box to show winner
+							Object[] options = { "New Game", "Exit" };
+							int response = JOptionPane
+							    .showOptionDialog(null,"Player " + game_.getCurrentPlayer()
+							        + " has won the game! Do you want to start a new game?",
+							                      "Winner!",JOptionPane.YES_NO_OPTION,
+							                      JOptionPane.QUESTION_MESSAGE,null,options,
+							                      options[0]);
+							if ( response == 0 ) {
+								game_ = new Game();
+								board_ = game_.getBoard();
+								comp_ = new Computer(board_,game_);
+								counter_ = 0;
+								repaint();
+
+							} else if ( response == 1 ) {
+								System.exit(0);
+							}
+						}
+					}
+				}
+
+			} else if ( winnerGomoku_ == true ) {
+				int x = evt.getX(); // x value where user clicked.
+				int y = evt.getY(); // y value where user clicked.
+
+				newX_ = -1;
+				newY_ = -1;
+
+				for ( int i = 0 ; i < 19 ; i++ ) {
+					for ( int j = 0 ; j < 19 ; j++ ) {
+						if ( Math.abs(x - vertexX_.get(i)) < 10
+						    && Math.abs(y - vertexY_.get(j)) < 10 ) {
+							newX_ = (int) (vertexX_.get(i) / 50.0) - 1;
+							newY_ = (int) (vertexY_.get(j) / 50.0) - 1;
+						}
+					}
+				}
+
+				if ( newX_ >= 0 && newY_ >= 0 ) { // if the values are a position on the
+					// board
+
+					currPlayer_ = game_.getCurrentPlayer(); // gets the current player in
+					// the game
+					if ( !game_.placeStone(newX_,newY_) ) { // stone is not in a valid
+						// position
+						System.out.println("please click in a valid position");
+					} else { // stone is in a valid position
+						drawCircle_ = true; // so paint will draw the circle
+
+						if ( !game_.isWinnerGomoku() ) {
+							if ( useComputer_ ) {
+								comp_.move();
+							} else {
+								game_.startRound(); // switches to the next player, start a new
+							} // round
+						} else {
+							// pop up box to show winner
+							Object[] options = { "New Game", "Exit" };
+							int response = JOptionPane
+							    .showOptionDialog(null,"Player " + game_.getCurrentPlayer()
+							        + " has won the game! Do you want to start a new game?",
+							                      "Winner!",JOptionPane.YES_NO_OPTION,
+							                      JOptionPane.QUESTION_MESSAGE,null,options,
+							                      options[0]);
+							if ( response == 0 ) {
+								game_ = new Game();
+								board_ = game_.getBoard();
+								counter_ = 0;
+								repaint();
+							} else if ( response == 1 ) {
+								System.exit(0);
+							}
+						}
+					}
+				}
+
+			}
+
+			// once the mouse is clicked, place a stone in a valid location
+			// if the stone is not in a valid position-do nothing
+			// if it is in a valid position, check for winner (captures/five adjacent)
+			// if there is a winner, get player number and do something
+			// call new round (change current player)
+
+			repaint();
+
+		}
+
+		public void mouseEntered ( MouseEvent e ) {
+
+		}
+
+		public void mouseExited ( MouseEvent e ) {
+
+		}
+
+		public void mousePressed ( MouseEvent e ) {
+
+		}
+
+		public void mouseReleased ( MouseEvent e ) {}
+
+	}
+
+	/*
+	 * Listener will listen for any clicks on the window.
+	 */
+	public class Listener implements ActionListener {
+
+		Listener () {
+
+		}
+
+		public void actionPerformed ( ActionEvent e ) {
+
+			if ( e.getActionCommand().equals(" New Game ") ) {
+
+				int responseToNewGame = JOptionPane
+				    .showConfirmDialog(null,
+				                       "Are you sure you want to start a new game?",
+				                       "Confirm",JOptionPane.YES_NO_OPTION,
+				                       JOptionPane.QUESTION_MESSAGE);
+				if ( responseToNewGame == JOptionPane.NO_OPTION ) {
+					System.out.println("No button clicked");
+				} else if ( responseToNewGame == JOptionPane.YES_OPTION ) {
+					game_ = new Game();
+					board_ = game_.getBoard();
+					counter_ = 0;
+					mainMenu.setVisible(true);
+					repaint();
+
+					System.out.println("Yes button clicked");
+				} else if ( responseToNewGame == JOptionPane.CLOSED_OPTION ) {
+					System.out.println("JOptionPane closed");
+				}
+
+			} else if ( e.getActionCommand().equals(" Rules ") ) { //// (http://www.pente.net/instructions.html)
+				if ( winnerGomoku_ == false ) {
+					// rules of the game
+					String message = "\"OBJECT OF THE GAME:\"\n" + " \n"
+					    + "Win by placing five (or more) of your stones in a row, vertically, \n"
+					    + "horizontally, or diagonally, with no empty points between them. Or, \n"
+					    + "win by capturing five (or more) pairs of your opponent's stones. \n"
+					    + " \n"
+
+					    + "\"HOW TO PLAY:\"\n" + " \n"
+					    + "Play starts with the board completely clear of stones.\n"
+					    + "The first player (black) begins the game by playing\n"
+					    + "one stone on the center point. Thereafter the players\n"
+					    + "take turns placing their stones, one at a time, on any\n"
+					    + "empty intersection. The stones are placed on the intersections \n"
+					    + "of the lines (including the very edge of the board), rather \n"
+					    + "than in the squares. Once played, a stone cannot be moved \n"
+					    + "again, except when removed by a capture. Players alternate \n"
+					    + "turns adding new stones to the board, building up their \n"
+					    + "positions, until one player wins." + " \n" + " \n"
+					    + "\"CAPTURES:\"\n" + " \n"
+
+					    + "Whenever your opponent has two stones (and only two) which are \n"
+					    + "adjacent,those stones are vulnerable to capture. The pair can be \n"
+					    + "captured by bracketing its two ends with your own stones. \n"
+					    + "The captured stones are removed from the board.\n"
+					    + "Captures can be made vertically, horizontally, or\n"
+					    + "diagonally, and multiple captures can occur on a \n"
+					    + "single move.\n" + " \n" + "\"WINNING THE GAME:\"\n" + " \n"
+					    + "The game ends immediately when one player captures five \n"
+					    + "pairs, or places five stones in a row. The opposing player \n"
+					    + "has no “last chance” to make a final move.\n"
+					    + "When a player obtains an unblocked row of four stones, called a \n"
+					    + "tessera, a win is imminent. Therefore, an unblocked row of three stones, \n"
+					    + "called a tria, is a serious threat that should be blocked unless a stronger o\n"
+					    + "ffensive move exists. An unblocked row of three stones, if it contains one \n"
+					    + "gap, is still considered a tria. In the example to the right, black has formed\n"
+					    + "both a horizontal and a vertical tria, while white has formed a tessera and\n"
+					    + "will win with the next move. \n" + " \n" + "\"ETIQUETTE:\"\n"
+					    + " \n"
+					    + "It is a customary, but not mandatory, refinement of this game to announce \n"
+					    + "“three” or “tria” when moving to make an open three, and also to\n"
+					    + "call “four” or “tessera” when making four in a row. This is so that \n"
+					    + "one's opponent does not forget to stop the formation of an open four,\n"
+					    + "or five—because there is no fun in winning a game owing to the\n"
+					    + "blunder of the adversary; at least there shouldn't be. The idea is \n"
+					    + "to win in spite of one's opponent seeing every threat. Pointing out\n"
+					    + "a player's errant move also demonstrates one's own confidence \n"
+					    + "and mastery of play. \n" + "\n"
+					    + "Pente Net - How to play the game of Pente, www.pente.net/instructions.html."
+
+					;
+					JOptionPane.showMessageDialog(new JFrame(),message,"Rules",
+					                              JOptionPane.INFORMATION_MESSAGE);
+				} else if ( winnerGomoku_ == true ) {
+					String message = "Gomoku is the simplest of the games. \n"
+					    + "To win, place 5 of your stones in a straight continuous line \n"
+					    + "(either horizontally, vertically or diagonally). \n"
+					    + "Whoever does this first wins the game. One note, \n"
+					    + "you must get exactly 5 in a row to win.\n"
+					    + " 6 or more of your stones in a row is called an \"overline\" \n"
+					    + "and does not count as a win, play continues.";
+					JOptionPane.showMessageDialog(new JFrame(),message,"Rules",
+					                              JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}
+		}
+
+	}
+
+}

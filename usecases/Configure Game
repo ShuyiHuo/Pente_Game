@@ -1,0 +1,12 @@
+@startuml
+|Player|
+start
+floating note left: Configure game
+:Player presses configurations;
+:Pick variation(Game options, online, VS computer or VS person matched for you);
+:Player exits configurations;
+stop
+|Client|
+|Server|
+
+@enduml

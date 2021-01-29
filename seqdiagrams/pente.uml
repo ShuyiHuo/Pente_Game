@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_PCEGYKoSEeeGc_AW4TW9ug" name="pente">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_WKhW0KoSEeeGc_AW4TW9ug">
+    <importedPackage xmi:type="uml:Profile" href="pathmap://Codegen_PROFILES/Codegen.profile.uml#_fPDsIBa-EearhdjjJ6cVzQ"/>
+  </packageImport>
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_XTZqcKoSEeeGc_AW4TW9ug">
+    <importedPackage xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_gHCqUKoSEeeGc_AW4TW9ug" name="GUI">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_aF60YKodEeeGc_AW4TW9ug" name="game_" visibility="private" type="_hbps0KoSEeeGc_AW4TW9ug">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_h2QkMKodEeeGc_AW4TW9ug">
+        <body>A game of Pente</body>
+      </ownedComment>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_RZMU0KodEeeGc_AW4TW9ug" name="Create">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_T79zkKodEeeGc_AW4TW9ug">
+        <body>Start a game of Pente.</body>
+      </ownedComment>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_VKTO8KodEeeGc_AW4TW9ug" name="placeStone">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_Xgu60KodEeeGc_AW4TW9ug">
+        <body>Place a stone on the board.</body>
+      </ownedComment>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Gt33MNSGEee6tr73mNvLHA" name="MouseClicked"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_hbps0KoSEeeGc_AW4TW9ug" name="Game">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_fdLGkKoVEeeGc_AW4TW9ug" name="board_" visibility="private" type="_iGXdwKoSEeeGc_AW4TW9ug">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_O9HwcKocEeeGc_AW4TW9ug">
+        <body>A pente board.</body>
+      </ownedComment>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_X2ah0KobEeeGc_AW4TW9ug" name="currPlayer_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_hUV00KobEeeGc_AW4TW9ug">
+        <body>value 1 for player 1, value 2 for player 2</body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dbi-UKobEeeGc_AW4TW9ug" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dbmosKobEeeGc_AW4TW9ug" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_73ItIKoSEeeGc_AW4TW9ug" name="CreateBoard">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_GZ2kUKobEeeGc_AW4TW9ug">
+        <body>A game of Pente.</body>
+      </ownedComment>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_-oO7wKoSEeeGc_AW4TW9ug" name="placeStone">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_NM924KobEeeGc_AW4TW9ug">
+        <body>Place a stone on a specific spot on the board</body>
+      </ownedComment>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nsPyEKobEeeGc_AW4TW9ug" name="player">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_nsPyEaobEeeGc_AW4TW9ug">
+          <body>value 1 for player 1, value 2 for player 2</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_wntRMKobEeeGc_AW4TW9ug" name="x">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_wntRMaobEeeGc_AW4TW9ug">
+          <body>x coordinate of the position to place the stone, x >=0, x&lt;boardsize</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_-eWQ4KobEeeGc_AW4TW9ug" name="y">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_-eWQ4aobEeeGc_AW4TW9ug">
+          <body>y coordinate of the position to place the stone, y >=0, y &lt; boardsize</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_eJSHsKoTEeeGc_AW4TW9ug" name="startGame">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_zH0dgKobEeeGc_AW4TW9ug">
+        <body>Start a game of pente.</body>
+      </ownedComment>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Jz_0IKoUEeeGc_AW4TW9ug" name="checkValidMove" visibility="private" concurrency="concurrent">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_2NDJEKobEeeGc_AW4TW9ug">
+        <body>Check whether a certain move is valid.</body>
+      </ownedComment>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_elDEYKoYEeeGc_AW4TW9ug" name="isValid" direction="return">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_elDEYaoYEeeGc_AW4TW9ug">
+          <body>true if the move is valid, false otherwise</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_FBvscKocEeeGc_AW4TW9ug" name="x">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_FBvscaocEeeGc_AW4TW9ug">
+          <body>x coordinate of the position to place the stone, x >=0, x &lt; boardsize</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_JPWVUKocEeeGc_AW4TW9ug" name="y">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_JPWVUaocEeeGc_AW4TW9ug">
+          <body>y coordinate of the position to place the stone, y >= 0, y &lt; boardsize</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_6lzKwNSIEee6tr73mNvLHA" name="checkWinner">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_EvHkINSJEee6tr73mNvLHA" name="winner" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_f-GnEPaLEeW5KOK8aDMdgA"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_iGXdwKoSEeeGc_AW4TW9ug" name="Board">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_rsDeQKoVEeeGc_AW4TW9ug" name="p1Connections_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_UqeU0KocEeeGc_AW4TW9ug">
+        <body>A collection of the connected stones that belong to player 1.</body>
+      </ownedComment>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_98GcQKoXEeeGc_AW4TW9ug" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_98LUwKoXEeeGc_AW4TW9ug" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_PjkUIKoWEeeGc_AW4TW9ug" name="p2Connections_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_XhXpcKocEeeGc_AW4TW9ug">
+        <body>A collection of the connected stones that belong to player 2.</body>
+      </ownedComment>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_3OtzsKoWEeeGc_AW4TW9ug" name="board_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_d_398KocEeeGc_AW4TW9ug">
+        <body>The pente board.</body>
+      </ownedComment>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_aeDu8KoaEeeGc_AW4TW9ug" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_aeGyQKoaEeeGc_AW4TW9ug" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_ID19wKoXEeeGc_AW4TW9ug" name="p1Captures_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_hfuwAKocEeeGc_AW4TW9ug">
+        <body>The number of captures that player 1 has currently made.</body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_K-6nwKoXEeeGc_AW4TW9ug" name="p2Captures_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_isPmcKocEeeGc_AW4TW9ug">
+        <body>The number of captures that player 2 has currently made.</body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_FvLyMMjREeel8bwJtzSz6Q" name="color_" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_S472sMjREeel8bwJtzSz6Q" name="connectedStones_" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Y_rLcMjREeel8bwJtzSz6Q" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Y_wD8MjREeel8bwJtzSz6Q" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_AhdHMKoTEeeGc_AW4TW9ug" name="Board">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_kRo28KocEeeGc_AW4TW9ug">
+        <body>Create a pente board.</body>
+      </ownedComment>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Dis1MKoUEeeGc_AW4TW9ug" name="placeStone">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_nXzWoKocEeeGc_AW4TW9ug">
+        <body>Place a stone on the board.</body>
+      </ownedComment>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_wIvn0KocEeeGc_AW4TW9ug" name="x">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_wIvn0aocEeeGc_AW4TW9ug">
+          <body>x coordinate of the position to place the stone on the board, x >=0, x &lt; board size.</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_z-7PMKocEeeGc_AW4TW9ug" name="y">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_z-7PMaocEeeGc_AW4TW9ug">
+          <body>y coordinate of the position to place the stone on the board, y >=0, y &lt; board size</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_6c1t0KocEeeGc_AW4TW9ug" name="player">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_6c1t0aocEeeGc_AW4TW9ug">
+          <body>value 1 for player 1, value 2 for player 2.</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_FrkmMKoUEeeGc_AW4TW9ug" name="checkCaptures">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_9UepUKocEeeGc_AW4TW9ug">
+        <body>Check if there are any captures to be made. </body>
+      </ownedComment>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_PdTzwKoZEeeGc_AW4TW9ug" name="numCaptures" direction="return">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_PdTzwaoZEeeGc_AW4TW9ug">
+          <body>number of captures a player has made, num >= 0</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_kUp2EKoZEeeGc_AW4TW9ug" name="player">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_kUp2EaoZEeeGc_AW4TW9ug">
+          <body>number of the player, num = 1 for player 1, num = 2 for player 2</body>
+        </ownedComment>
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ge_owKo9EeeqqJXRUQk05g" name="removeCaptures">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_HZQd8Ko-EeeqqJXRUQk05g">
+        <body></body>
+      </ownedComment>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_qyRPYKo9EeeqqJXRUQk05g" name="x">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_qyRPYao9EeeqqJXRUQk05g">
+          <body></body>
+        </ownedComment>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_xrtzcKo9EeeqqJXRUQk05g" name="y">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_xrtzcao9EeeqqJXRUQk05g">
+          <body></body>
+        </ownedComment>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_d0AdIMjREeel8bwJtzSz6Q" name="update"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_9QjjkMjREeel8bwJtzSz6Q" name="rowOfFive">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_GMOeEMjSEeel8bwJtzSz6Q" name="connectedStones_" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_KtSLsNSJEee6tr73mNvLHA" name="createStone" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_XJIoYNSJEee6tr73mNvLHA" name="x">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_Y5VasNSJEee6tr73mNvLHA" name="y">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_7wRIABydEduyofBvg4RL2w"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_gJRMINSJEee6tr73mNvLHA" name="checkFiveCapture" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_nx6YgNSJEee6tr73mNvLHA" name="fiveCapture" direction="return">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_f-GnEPaLEeW5KOK8aDMdgA"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_b4eaAMjQEeel8bwJtzSz6Q" name="GameState">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_yGEgwMjUEeel8bwJtzSz6Q" name="whosTurn_" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yb1VYMjUEeel8bwJtzSz6Q" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yb3xoMjUEeel8bwJtzSz6Q" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_8-jGMMjUEeel8bwJtzSz6Q" name="inprogress_" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_vOngkMjWEeel8bwJtzSz6Q" name="infor_" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_aqK9gMnFEee_NstjoZUMiA" name="board_" visibility="private" type="_iGXdwKoSEeeGc_AW4TW9ug">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_aqK9gcnFEee_NstjoZUMiA">
+        <body>Board that holds the state of the game board to give to clients</body>
+      </ownedComment>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_33ZssMnFEee_NstjoZUMiA" name="winner_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_CXJpEMnGEee_NstjoZUMiA">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_CXJpEcnGEee_NstjoZUMiA">
+          <body>contains the name of the winner when winner is decided</body>
+        </ownedComment>
+        <body></body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_r3jIIMnIEeeedoiTDStsdw" name="p1name_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_r3jIIcnIEeeedoiTDStsdw">
+        <body>player one's name</body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_wTg9IMnIEeeedoiTDStsdw" name="p2name_" visibility="private">
+      <ownedComment xmi:type="uml:Comment" xmi:id="_wTg9IcnIEeeedoiTDStsdw">
+        <body>player two's name</body>
+      </ownedComment>
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_WW_2QNSIEee6tr73mNvLHA" name="Update"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_aAxZUNSIEee6tr73mNvLHA" name="Inform"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_j4dvYMjQEeel8bwJtzSz6Q" name="Server" visibility="private">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_5umi8MjVEeel8bwJtzSz6Q" name="GameState_" visibility="private" type="_b4eaAMjQEeel8bwJtzSz6Q"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_AJaDMMjWEeel8bwJtzSz6Q" name="updateClient"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_IPq_sMjWEeel8bwJtzSz6Q" name="Create"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_q02P8NSHEee6tr73mNvLHA" name="Start"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_3aJjkNSHEee6tr73mNvLHA" name="Inform"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_ZhbYMMjSEeel8bwJtzSz6Q" name="Client">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_GTzlYMjVEeel8bwJtzSz6Q" name="GUI_" visibility="private" type="_gHCqUKoSEeeGc_AW4TW9ug"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_5E7pEMnAEee_NstjoZUMiA" name="state" visibility="private" type="_b4eaAMjQEeel8bwJtzSz6Q"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_GPzAgMnEEee_NstjoZUMiA" name="Update">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_KoSqwMnEEee_NstjoZUMiA" name="message">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_HK7xMNSHEee6tr73mNvLHA" name="CreateConnection"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_bK7FkMjSEeel8bwJtzSz6Q" name="GameThread">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_cB8FwMjVEeel8bwJtzSz6Q" name="clientHolder_" visibility="private">
+      <type xmi:type="uml:Stereotype" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_WgwmcByHEduN1bTiWJ0lyw"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cTDq8MjVEeel8bwJtzSz6Q" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cTGHMMjVEeel8bwJtzSz6Q" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_84G1EMjWEeel8bwJtzSz6Q" name="client_" visibility="private" type="_ZhbYMMjSEeel8bwJtzSz6Q" aggregation="composite">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9KkeEMjWEeel8bwJtzSz6Q" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9Km6UMjWEeel8bwJtzSz6Q" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KrqEgMjXEeel8bwJtzSz6Q" name="game_" visibility="private" type="_hbps0KoSEeeGc_AW4TW9ug"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_CGE6wNSIEee6tr73mNvLHA" name="Create"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_GYcH0NSIEee6tr73mNvLHA" name="Update"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3SgbUMjSEeel8bwJtzSz6Q" memberEnd="_3ShCYsjSEeel8bwJtzSz6Q _3ShpcMjSEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3ShCYMjSEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3ShCYcjSEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3ShCYsjSEeel8bwJtzSz6Q" name="game" type="_hbps0KoSEeeGc_AW4TW9ug" association="_3SgbUMjSEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3ShpcMjSEeel8bwJtzSz6Q" name="board" type="_iGXdwKoSEeeGc_AW4TW9ug" aggregation="composite" association="_3SgbUMjSEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_TvvbgMjUEeel8bwJtzSz6Q" memberEnd="_TvwCksjUEeel8bwJtzSz6Q _TvwCk8jUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_TvwCkMjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_TvwCkcjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_TvwCksjUEeel8bwJtzSz6Q" name="client" type="_ZhbYMMjSEeel8bwJtzSz6Q" association="_TvvbgMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_TvwCk8jUEeel8bwJtzSz6Q" name="gui" type="_gHCqUKoSEeeGc_AW4TW9ug" aggregation="composite" association="_TvvbgMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_WxOPgMjUEeel8bwJtzSz6Q" memberEnd="_WxO2kcjUEeel8bwJtzSz6Q _WxO2ksjUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WxOPgcjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WxO2kMjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_WxO2kcjUEeel8bwJtzSz6Q" name="server" type="_j4dvYMjQEeel8bwJtzSz6Q" association="_WxOPgMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_WxO2ksjUEeel8bwJtzSz6Q" name="client" type="_ZhbYMMjSEeel8bwJtzSz6Q" aggregation="composite" association="_WxOPgMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_YcamAMjUEeel8bwJtzSz6Q" memberEnd="_YcbNEcjUEeel8bwJtzSz6Q _YcbNEsjUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_YcamAcjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_YcbNEMjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_YcbNEcjUEeel8bwJtzSz6Q" name="gamethread" type="_bK7FkMjSEeel8bwJtzSz6Q" association="_YcamAMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_YcbNEsjUEeel8bwJtzSz6Q" name="server" type="_j4dvYMjQEeel8bwJtzSz6Q" aggregation="composite" association="_YcamAMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_cyIpEMjUEeel8bwJtzSz6Q" memberEnd="_cyIpE8jUEeel8bwJtzSz6Q _cyJQIMjUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cyIpEcjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_cyIpEsjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cyIpE8jUEeel8bwJtzSz6Q" name="game" type="_hbps0KoSEeeGc_AW4TW9ug" association="_cyIpEMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_cyJQIMjUEeel8bwJtzSz6Q" name="gamethread" type="_bK7FkMjSEeel8bwJtzSz6Q" aggregation="composite" association="_cyIpEMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_erglgMjUEeel8bwJtzSz6Q" memberEnd="_erglg8jUEeel8bwJtzSz6Q _erhMkMjUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_erglgcjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_erglgsjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_erglg8jUEeel8bwJtzSz6Q" name="gamestate" type="_b4eaAMjQEeel8bwJtzSz6Q" association="_erglgMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_erhMkMjUEeel8bwJtzSz6Q" name="game" type="_hbps0KoSEeeGc_AW4TW9ug" aggregation="composite" association="_erglgMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_gTWtEMjUEeel8bwJtzSz6Q" memberEnd="_gTXUIcjUEeel8bwJtzSz6Q _gTXUIsjUEeel8bwJtzSz6Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_gTWtEcjUEeel8bwJtzSz6Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_gTXUIMjUEeel8bwJtzSz6Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_gTXUIcjUEeel8bwJtzSz6Q" name="server" type="_j4dvYMjQEeel8bwJtzSz6Q" association="_gTWtEMjUEeel8bwJtzSz6Q"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_gTXUIsjUEeel8bwJtzSz6Q" name="gamestate" type="_b4eaAMjQEeel8bwJtzSz6Q" aggregation="composite" association="_gTWtEMjUEeel8bwJtzSz6Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="__J4r4NSGEee6tr73mNvLHA" memberEnd="__J6hENSGEee6tr73mNvLHA __J7IINSGEee6tr73mNvLHA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="__J56ANSGEee6tr73mNvLHA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="__J56AdSGEee6tr73mNvLHA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="__J6hENSGEee6tr73mNvLHA" name="gamestate" type="_b4eaAMjQEeel8bwJtzSz6Q" association="__J4r4NSGEee6tr73mNvLHA"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="__J7IINSGEee6tr73mNvLHA" name="client" type="_ZhbYMMjSEeel8bwJtzSz6Q" aggregation="composite" association="__J4r4NSGEee6tr73mNvLHA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_-UbOENSHEee6tr73mNvLHA" memberEnd="_-Ub1ItSHEee6tr73mNvLHA _-UccMNSHEee6tr73mNvLHA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-Ub1INSHEee6tr73mNvLHA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_-Ub1IdSHEee6tr73mNvLHA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-Ub1ItSHEee6tr73mNvLHA" name="gamethread" type="_bK7FkMjSEeel8bwJtzSz6Q" association="_-UbOENSHEee6tr73mNvLHA"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-UccMNSHEee6tr73mNvLHA" name="gamestate" type="_b4eaAMjQEeel8bwJtzSz6Q" aggregation="composite" association="_-UbOENSHEee6tr73mNvLHA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_oVxwANSIEee6tr73mNvLHA" memberEnd="_oVyXEtSIEee6tr73mNvLHA _oVy-INSIEee6tr73mNvLHA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oVyXENSIEee6tr73mNvLHA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oVyXEdSIEee6tr73mNvLHA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_oVyXEtSIEee6tr73mNvLHA" name="board" type="_iGXdwKoSEeeGc_AW4TW9ug" association="_oVxwANSIEee6tr73mNvLHA"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_oVy-INSIEee6tr73mNvLHA" name="game" type="_hbps0KoSEeeGc_AW4TW9ug" aggregation="composite" association="_oVxwANSIEee6tr73mNvLHA"/>
+  </packagedElement>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_MIw0cMnDEee_NstjoZUMiA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_MIz3wMnDEee_NstjoZUMiA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+  </profileApplication>
+</uml:Model>

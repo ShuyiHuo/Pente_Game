@@ -1,0 +1,70 @@
+@startuml
+
+actor User as A
+participant "GUI" as B
+participant "Game" as C
+participant "Board" as D
+
+participant "Computer" as E
+
+
+
+ A -> B: Start new game
+ activate B
+ activate C
+ B -> C: Start Game
+  B-> E: Create
+ activate E
+ deactivate E
+ deactivate B
+
+
+ C -> D: Create Board
+ activate D
+ deactivate D
+ 
+ deactivate C
+ 
+ 
+ A -> B: Places stone
+  activate B
+ 
+ 
+ B -> C: Places stone (x,y)
+ activate C
+ 
+ deactivate B
+ C -> D: Checks to see if spot is open (x,y)
+ activate D
+ 
+ D --> C: Valid move?
+ 
+ C -> D: places stone(x,y,player)
+ D -> D: Check/Remove captures
+ D -> D: Update player stats
+ D -> C: Captured stones to remove
+ activate B
+ C -> B: Capture Stones
+ deactivate C
+ deactivate D
+ 
+ deactivate B
+
+ 
+ C -> D: Has a player won
+  activate C
+  activate D
+  
+
+  D -> D: check for 5 in a row
+  D -> D: check for 5 pairs of captures
+  D -> C: return for if there is a winner
+ deactivate D
+ 
+ C -> B: Announce Winner
+ activate B
+ deactivate C
+ deactivate B
+ 
+ 
+@enduml

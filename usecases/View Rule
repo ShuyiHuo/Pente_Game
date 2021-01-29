@@ -1,0 +1,20 @@
+@startuml
+|Player|
+start
+
+floating note left: View rules
+:Player views rules;
+
+:Rules are displayed;
+:Player exits Rules display;
+
+stop
+
+|Client|
+|Server|
+
+@enduml
+
+
+
+

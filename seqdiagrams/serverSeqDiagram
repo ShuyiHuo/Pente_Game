@@ -1,0 +1,126 @@
+@startuml
+
+actor User as A
+
+participant "GUI" as B
+participant "Client" as 1
+participant "Server" as 2
+participant "GameThread" as 3
+participant "GameState" as 4
+participant "Game" as C
+participant "Board" as D
+
+
+A->B: Start New game
+activate B
+B->1: Create
+deactivate B
+ activate 1
+ 1->2: Create connection
+ activate 2
+
+2->3: Create 
+activate 3
+deactivate 3
+
+2->3: Start
+activate 3
+3->C: Create
+
+ activate C
+ C -> D: Create Board
+ activate D
+ D-->D: Create Stones
+ 
+ 
+ C-> 4: Create
+  deactivate D
+ activate 4
+ 
+
+ 
+4-> 3: Update
+deactivate C
+  deactivate 4
+ 3 ->2: Update
+ 
+ 2 -> 1: Update/Starts Game
+ 
+ 1-> B: Update
+ activate B
+ deactivate B
+deactivate 1
+ deactivate 2
+ deactivate 3
+ 
+ deactivate C
+ 
+ 
+ A -> B: Places stone
+ activate B
+ 
+ B -> 1: Place stone
+ activate 1
+ 
+  
+  1->4: Updates (x,y)
+  activate 4
+  4->2:Places stone (x,y)
+  deactivate 4
+  activate 2
+ 1-> C: Places stone(x,y)
+  activate C
+ 
+ deactivate B
+ C -> D: Checks to see if spot is open (x,y)
+ activate D
+ 
+ D --> C: Valid move?
+  deactivate D
+ 
+ C -> D: places stone(x,y,player)
+ activate D
+ D -> D: Check for captures
+ D -> D: Remove captures
+ D -> D: Update player stats
+ D -> 4: Capture Stones/Place Stone
+  deactivate D
+ activate 4
+ 4 -> 2: Informs of the updated gameState
+ deactivate 4
+ 
+ 2->1: Informs
+ 
+ 1-> B: Update
+ activate B
+ deactivate B
+ 
+ 
+
+ 
+ C -> D: Has a player won
+  activate D
+  
+
+  D -> D: check for 5 in a row
+  D -> D: check for 5 pairs of captures
+  D --> C: return yes/no for if there is a winner
+ deactivate D
+ 
+ C -> 4: Announce Winner
+ activate 4
+ deactivate C
+
+4-> 2: Informs if winner
+deactivate 4
+2-> 1: informs if winner
+
+
+1->B: Update if winner
+ activate B
+deactivate B
+ deactivate 1
+ deactivate 2
+ 
+ 
+@enduml

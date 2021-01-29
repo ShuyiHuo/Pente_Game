@@ -1,0 +1,52 @@
+
+/**
+ * @author sp5675
+ *
+ */
+public class Computer {
+	
+	Board board_; //the board to look through
+	boolean inUse_; //is the computer inUse
+	Game game_;
+
+	/**
+	 * Constructor
+	 */
+	public Computer(Board board, Game gm) {
+		board_ = board;
+		game_ = gm;
+
+	}
+	
+
+	
+	/**
+	 * The computer's move
+	 */
+	
+	public void move() {
+		 
+		
+		boolean canMove = true;
+		
+		while(canMove) {
+			
+			int randomX = (int) (Math.random() * 19);
+			System.out.println("x " + randomX);
+			int randomY = (int) (Math.random() * 19);
+			System.out.println("y " + randomY);
+			
+		if (board_.placeStone(randomX,randomY,1)) {
+
+			canMove = false;
+		}
+		else  {}
+		}
+
+		
+	}
+	
+	public boolean getUse() {
+		return inUse_;
+	}
+}

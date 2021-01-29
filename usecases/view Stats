@@ -1,0 +1,21 @@
+@startuml
+|Player|
+start
+
+floating note left: View Stats
+:Player views starts;
+|Server|
+:Stats for that player are displayed;
+|Player|
+:Player exits Stats display;
+
+stop
+
+|Client|
+|Server|
+
+@enduml
+
+
+
+

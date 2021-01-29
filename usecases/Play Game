@@ -1,0 +1,40 @@
+@startuml
+|Player|
+start
+floating note left: Play game
+:Player Starts New Game;
+
+|Client|
+
+|Server|
+:Waiting room;
+:Pick stone color;
+:Black stone placed in center;
+
+|Player|
+repeat
+while(Players alternate placing stone) is (Not legal)
+
+endwhile(Legal move)
+
+|Server|
+if(Check if 5 stones in a row) then (yes)
+:Announce winner;
+:End game;
+	stop
+else(no)
+endif
+
+if(Check if capture) then (yes)
+	:Remove captured stones;
+	:Update stats;
+	if(Check if 5 captures in a row) then (yes)
+      :Announce winner;
+      :End game;
+		stop
+	else(no)
+	endif
+else(no)
+endif
+
+@enduml

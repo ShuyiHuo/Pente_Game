@@ -1,0 +1,9 @@
+@startuml
+left to right direction
+:user: --> (Play Pente)
+:user: --> (Configure Game)
+:user: --> (view statistics)
+:user: --> (View rules)
+(Configure Game) <-- (Player Vs. Computer)
+(Configure Game).. (Play Pente)
+@enduml
